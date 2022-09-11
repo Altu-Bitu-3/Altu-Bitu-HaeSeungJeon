@@ -8,7 +8,7 @@ int main(){
     
     int m, num;
     cin >> m;
-    bool arr[20]; //1부터 20까지의 원소의 유무를 저장할 bool 배열
+    bool arr[20]; //1부터 20까지의 원소의 유무를 저장할 bool 배열 생성
 
     string str;
     

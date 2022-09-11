@@ -35,7 +35,7 @@ int main() {
         ans += round_up + '0'; //ans에 반영
     }
     
-    for(int i=ans.length()-1;i>=0;i--) { //역순 출력
+    for(int i=ans.length()-1;i>=0;i--) { //역순으로 출력
         cout << ans[i];
     }
 }
