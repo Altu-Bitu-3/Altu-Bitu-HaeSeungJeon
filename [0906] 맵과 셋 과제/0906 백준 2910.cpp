@@ -3,15 +3,16 @@
 #include <map>
 
 using namespace std;
-map<int, int> frq; //숫자와 빈도 저장
-map<int, int> idx; //숫자와 처음 나온 인덱스 저장
+typedef map<int, int> pair_save; //반복되는 자료형은 typedef 사용
+pair_save frq; //숫자와 빈도 저장
+pair_save idx; //숫자와 처음 나온 인덱스 저장
 vector<pair<int,int>> vec; //정렬을 위해 vector 이용
 
 /*map을 value 값으로 정렬하는 코드*/
 bool frequency(const pair<int,int>& a, const pair<int,int>& b) {
-	if (a.second == b.second) 
-	    return idx[a.first] < idx[b.first];
-	return a.second > b.second;
+	if (a.second != b.second) //같지 않은 경우를 먼저 비교
+	    return a.second > b.second;
+	return idx[a.first] < idx[b.first];
 }
 
 int main() {
