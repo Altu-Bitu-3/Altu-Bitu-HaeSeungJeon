@@ -1,25 +1,19 @@
 #include <iostream>
 #include <vector>
 #include <algorithm> //sort 사용
+#include <utility>
 
 using namespace std;
 
 vector<int> arr; //수열, 임시 배열
 
-struct coordinate{
-    int x, y;
-};
-
 //비교함수
-bool cmpAdv(const coordinate&a, const coordinate&b){
-    if(a.y != b.y){ //y좌표가 다르다면
-        return a.y <  b.y; //y좌표가 증가하는 순서대로 정렬
+bool cmpAdv(const pair<int, int>&a, const pair<int, int>&b){
+    if(a.second != b.second){ //y좌표가 다르다면
+        return a.second <  b.second; //y좌표가 증가하는 순서대로 정렬
     }
-    
-    if(a.x != b.x){ //x좌표가 다르다면
-        return a.x <  b.x; //x좌표가 증가하는 순서대로 정렬
-    }
-    return 0;
+    //y좌표가 같으면 x좌표는 무조건 다름(위치가 같은 두 점은 존재하지 X)
+    return a.first <  b.first; //x좌표가 증가하는 순서대로 정렬
 }
 
 int main() {
@@ -27,17 +21,17 @@ int main() {
 
     cin >> n;
     
-    vector<coordinate> arr(n);
+    vector<pair<int, int>> arr(n); //vector와 pair 컨테이너 같이 사용
     
     for(int i=0;i<n;i++){
-        cin >> arr[i].x >> arr[i].y;
+        cin >> arr[i].first >> arr[i].second;
     }
     
     sort(arr.begin(), arr.end(), cmpAdv);
     
     //출력
     for(int i=0; i<n; i++){
-        cout << arr[i].x << " " << arr[i].y << "\n";
+        cout << arr[i].first << " " << arr[i].second << "\n";
     }
     return 0;
 }
