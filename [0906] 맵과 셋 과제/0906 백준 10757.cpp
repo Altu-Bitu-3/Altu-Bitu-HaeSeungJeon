@@ -23,11 +23,9 @@ int main() {
             sum += B[--B_size] - '0';
         }
         sum += round_up;    //아래 자릿수 계산에서 올림수가 있었다면 더하기
-        if(sum >= 10){      //이번 계산에서 올림수가 있는지 확인
-            round_up = sum/10; 
-            sum = sum % 10;
-        }
-        else round_up=0;    //올림수가 없다면 0으로 다시 초기화
+        //이번 계산에서의 올림수 저장해주기(10 미만이면 올림수는 0, 10 이상이면 올림수 생김)
+        round_up = sum/10; 
+        sum = sum % 10;
         ans += sum + '0';   //ans 문자열 뒤에 붙이기
         ans_size++;
     }
