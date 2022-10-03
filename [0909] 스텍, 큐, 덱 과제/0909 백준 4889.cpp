@@ -8,7 +8,6 @@ int isStable(string &s){
     stack<char> st;
     map<char, char> m;
     int cnt=0; //최소 연산의 수 카운트
-    m['}'] = '{';
     
     for(int i=0;i<s.length();i++){
         switch(s[i]){
@@ -19,7 +18,7 @@ int isStable(string &s){
             //오른쪽 괄호는 짝이 맞는지 체크
             case '}':
                 //오른쪽 괄호가 나타났는데, 1. 스텍이 비어있거나 2. 스텍에 있는 괄호가 왼쪽이 아니라면
-                if(st.empty() || st.top() != m[s[i]]){
+                if(st.empty() || st.top() != '{'){
                     st.push(s[i]);
                     break;
                 }
