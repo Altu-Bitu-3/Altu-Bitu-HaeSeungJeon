@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int idx[27];
+int idx[26];
 
 /* 중요한 코너케이스 -> 이 경우에는 fail
    1. 같은 알파벳이 중복으로 다른 위치에 저장된 경우
@@ -13,14 +13,14 @@ int idx[27];
 
 int wheel_check(int n, int after, char alpha, vector<char> &wheel){
 
-    if(idx[alpha-'A'+1]!=-1 && idx[alpha-'A'+1]!=after){ //다른 위치에 이미 저장되어 있다면 false
+    if(idx[alpha-'A']!=-1 && idx[alpha-'A']!=after){ //다른 위치에 이미 저장되어 있다면 false
         return -1;
     }
     if(wheel[after]!='?' && wheel[after]!=alpha){ //만약 해당 위치에 이미 다른 알파벳이 저장되어 있다면 false
         return -1;
     }
     wheel[after] = alpha; //문자 넣어주기
-    idx[alpha-'A'+1] = after; //해당 인덱스에서 방문했다고 표시
+    idx[alpha-'A'] = after; //해당 인덱스에서 방문했다고 표시
 
     return after;
 }
@@ -28,13 +28,12 @@ int wheel_check(int n, int after, char alpha, vector<char> &wheel){
 int main() {
     ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     
-    fill(idx, idx+27, -1);
+    fill(idx, idx+26, -1);
     
     int n, k; //바퀴의 칸 수, 바퀴를 돌리는 횟수
     cin >> n >> k;
     
-    vector<char> wheel(n); //알파벳을 저장할 바퀴 초기화
-    fill(wheel.begin(), wheel.end(), '?');  //바퀴 초기화
+    vector<char> wheel(n, '?'); //알파벳을 저장할 바퀴 초기화
 
     int last=0; //마지막으로 바퀴가 위치했던 인덱스 저장
     
