@@ -13,7 +13,7 @@ using namespace std;
 int L=1; //1부터 검사
 int W;
 
-void calculate(int R, int B){
+void calculate(int R, int B, pair<int, int> &ans){
     while(true){
         W=0.5*R-L+2;
         
@@ -24,16 +24,20 @@ void calculate(int R, int B){
             L++;
         }
     }
+    ans.first=W; //더 큰 수가 먼저 출력되어야 함 (정답을 찾는 순간 바로 break -> W가 항상 더 큼)
+    ans.second=L;
 }
 
 int main() {
     int R, B;
     cin >> R >> B;
     
-    calculate(R, B);
+    pair<int, int> ans;
     
-    if(L<W) swap(L, W); //더 큰 수를 L로 설정
+    calculate(R, B, ans);
     
-    cout << L << ' ' << W;
+    
+    
+    cout << ans.first << ' ' << ans.second;
 
 }

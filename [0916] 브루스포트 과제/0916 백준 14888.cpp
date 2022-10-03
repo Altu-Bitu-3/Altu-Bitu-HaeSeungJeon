@@ -10,30 +10,36 @@ using namespace std;
 int max_cal = -1e9-1;
 int min_cal = 1e9+1;
 
+//사칙연산하는 함수
+int mathCal(int answer, int i, vector<int> &oper, vector<int> &num){
+    if(oper[i]==3){
+        return answer += num[i+1];
+    }
+    if(oper[i]==2){
+        return answer -= num[i+1];
+    }
+    if(oper[i]==1){
+        return answer *= num[i+1];
+    }
+    if(oper[i]==0){
+        return answer /= num[i+1];
+    }
+    return 0;
+}
+
 //연산하는 함수
 void calculate(int n, vector<int> &num, vector<int> &oper){
     
     do{
         int answer=num[0]; 
         for(int i=0;i<n-1;i++){ //배열에 저장된 연산자 순서대로 계산
-            if(oper[i]==0){
-                answer += num[i+1];
-            }
-            if(oper[i]==1){
-                answer -= num[i+1];
-            }
-            if(oper[i]==2){
-                answer *= num[i+1];
-            }
-            if(oper[i]==3){
-                answer /= num[i+1];
-            }
+           answer = mathCal(answer, i, oper, num); //사칙연산하는 함수 호출
         }
         
-        if(answer >  max_cal) max_cal = answer;
-        if(answer < min_cal) min_cal = answer;
+        max_cal = max(answer, max_cal);
+        min_cal = min(answer, min_cal);
         
-    }while(next_permutation(oper.begin(), oper.end()));  //연산자 순서 새롭게 바꾸기
+    }while(prev_permutation(oper.begin(), oper.end()));  //연산자 순서 새롭게 바꾸기
 }
 
 int main() {
@@ -46,16 +52,15 @@ int main() {
         cin >> num[i]; //피연산자 저장
     }
     
-    int oper_weight=0; //각 연산자를 구분해주기 위한 가중치
+    int oper_weight=4; //각 연산자를 구분해주기 위한 숫자
     
-    while(oper_weight<4){
-        int oper_num; //연산자의 개수
+    while(oper_weight--){
+        int oper_num; //각 연산자의 개수
         cin >> oper_num;
 
         for(int i=0;i<oper_num;i++){
             oper.push_back(oper_weight); //연산자의 개수만큼 벡터에 넣어주기
         }
-        oper_weight += 1; //다음 연산자를 저장하기 위해 가중치 증가
     }
     
     calculate(n, num, oper);
