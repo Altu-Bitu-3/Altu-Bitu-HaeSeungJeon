@@ -5,7 +5,8 @@ using namespace std;
 
 /*알튜비튜 <동적 계획법> 강의 설명을 참고하였습니다.*/
 
-void longestCheck(int n, int dp[], int sequence[]){
+int longestCheck(int n, int dp[], int sequence[]){
+    int result_max=dp[0];
     for(int i=1;i<n;i++){ //각 인덱스를 모두 탐색한다. (맨 앞 인덱스 제외)
         int dp_max=0;
         for (int j=0; j<=i-1; j++){ //해당 인덱스의 앞 부분을 검사한다.
@@ -15,7 +16,9 @@ void longestCheck(int n, int dp[], int sequence[]){
             dp_max=max(dp[j], dp_max); //만약 앞의 것이 더 작다면 그 중 max가 되는 dp 찾기
         }
         dp[i] = dp_max+1; //앞의 수열과 이어붙이기
+        result_max=max(dp[i], result_max); //모든 수열 중 가장 긴 것 찾기
     }
+    return result_max;
 }
 
 int main() {
@@ -28,11 +31,5 @@ int main() {
     for(int i=0;i<n;i++){
         cin >> sequence[i]; //숫자 저장
     }
-    longestCheck(n, dp, sequence);
-   
-    int result_max=0;
-    for(int i=0;i<n;i++){
-       result_max=max(dp[i], result_max); //모든 수열 중 가장 긴 것 찾기
-    }
-    cout << result_max;
+    cout << longestCheck(n, dp, sequence);
 }
