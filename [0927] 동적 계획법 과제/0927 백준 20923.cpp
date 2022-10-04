@@ -2,17 +2,14 @@
 #include <deque>
 
 using namespace std;
+typedef deque<int> de;
 
-deque<int> do_card; //도도의 덱
-deque<int> su_card; //수연이의 덱
-deque<int> do_gnd; //도도의 그라운드
-deque<int> su_gnd; //수연이의 그라운드
+de do_card; //도도의 덱
+de su_card; //수연이의 덱
+de do_gnd; //도도의 그라운드
+de su_gnd; //수연이의 그라운드
 
 int n, m;
-
-/*자꾸 AccessEmptyContainer 에러가 뜨는 데 그 이유를 모르겠습니다.
-  도와주시면 감사하겠습니다!
-*/
 
 void TakeCardCheck(){
     //양측 그라운드가 모두 차 있고, 그라운드의 합이 5라면 소연이가 카드 가져감
@@ -28,7 +25,7 @@ void TakeCardCheck(){
     }
     
     //한쪽 그라운드에서 숫자 5 카드가 나오면 도도가 카드 가져감
-    if((!do_gnd.empty() && do_gnd.back() == 5) || (!su_card.empty() && su_gnd.back() == 5)){
+    if((!do_gnd.empty() && do_gnd.back() == 5) || (!su_gnd.empty() && su_gnd.back() == 5)){
         while(su_gnd.size()){
             do_card.push_front(su_gnd.front()); //상대방 것 가져가기
             su_gnd.pop_front();
@@ -40,7 +37,7 @@ void TakeCardCheck(){
     }
 }
 
-void HalliGalli(){
+int HalliGalli(){
     while(true){
         if(!do_card.empty()){
             do_gnd.push_back(do_card.back());
@@ -48,7 +45,8 @@ void HalliGalli(){
         }
         //덱이 비는 순간 바로 상대의 승리
         if(do_card.empty()){
-            cout << "su";
+            return 1;
+            break;
         }
         //카드 가져가는 사람 알아내기
         TakeCardCheck();
@@ -61,7 +59,7 @@ void HalliGalli(){
         }
         //덱이 비는 순간 바로 상대의 승리
         if(su_card.empty()){
-            cout << "do";
+            return 0;
         }
         //카드 가져가는 사람 알아내기
         TakeCardCheck();
@@ -69,13 +67,13 @@ void HalliGalli(){
         if(m==0) break;
     }
     if(do_card.size() == su_card.size()){
-        cout << "dosu";
+        return 2;
     }
     else if(do_card.size() < su_card.size()){
-        cout << "su";
+        return 1;
     }
     else {
-        cout << "do";
+        return 0;
     }
 }
 
@@ -92,5 +90,15 @@ int main() {
         su_card.push_back(su_in);
     }
         
-    HalliGalli();
+    switch (HalliGalli()){
+        case 0:
+            cout << "do";
+            break;
+        case 1:
+            cout << "su";
+            break;
+        case 2:
+            cout << "dosu";
+            break;
+    }
 }
