@@ -18,14 +18,17 @@ void backtracking(int row, int city_num, int result_cost){ //방문한 도시수
            참고 이유: 마지막 도시에서 출발 도시로 당연히 올 수 있으리라 생각해서 자꾸 50%쯤에서 '틀렸습니다'가 떴습니다.
            해결하기 위해 구글링하다가 놓친 마지막 조건을 발견해 이 부분 코드를 해당 블로그를 참고했습니다.
         */
-        //마지막 도시에서 출발 도시로 올 수 없거나, 현재까지 계산한 값이 이미 최소값보다 크면 return
-        if(city[row][0]==0 || result_cost > min_cost){
+        //마지막 도시에서 출발 도시로 올 수 없으면 return
+        if(city[row][0]==0){
             return;
         }
         min_cost = min(min_cost, result_cost+city[row][0]); //해당 경로 값이 최솟값이 되는지 확인
         return;
     }
     for(int j=0;j<n;j++){ //j: 열
+        if(result_cost > min_cost){ //현재까지 계산한 값이 이미 최소값보다 크면 return
+            return;
+        }
         //같은 행의 다른 열을 방문해주면 그게 곧 한 도시에서 갈 수 있는 도시를 방문하는 게 됨.
         if(!check[j] && city[row][j]!=0){ //이미 방문한 도시 또는 자기 자신은 방문 불가
             check[j]=true; //어떤 도시 방문하면 그 도시 선택지 전부 없애기
