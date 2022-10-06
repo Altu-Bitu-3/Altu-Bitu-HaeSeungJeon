@@ -1,0 +1,73 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+vector<bool> number;
+
+//골드바흐 추측을 계산하는 함수
+void findGoldbach(int n, vector<bool> &number){
+    
+    for(int i=3;i<=n;i+=2){ //짝수는 검사할 필요 없음
+        //짝이 되는 소수가 존재한다면 프린트
+        if(number[i]==true && number[n-i]==true) {
+            cout << n << " = " << i << " + " << n-i << '\n';
+            break;
+        }
+        if(i+2>=n) {
+            cout << "Goldbach's conjecture is wrong.";
+            break;
+        }
+    }
+}
+
+//소수를 구하는 함수
+void findPrime(int n, vector<bool> &number){
+    
+    //0과 1은 소수가 아니므로 false
+    number[0] = number[1] = false;
+    
+    //각 숫자를 하나씩 검사하기
+    for(int i=2;i<=n;i++){
+        if(!number[i]){ //이미 소수가 아니라고 판단되어 있으면 다음 수로 넘어가기
+            continue;
+        }
+        //i의 배수를 지워줌
+        for(int j=i+i;j<=n;j+=i){
+            if(!number[j]){ //이미 소수가 아니라고 판단되어 있으면 다음 수로 넘어가기
+                continue;
+            }
+            number[j] = false;
+        }    
+    }
+    
+    //이 문제에서 짝수인 소수는 필요없으므로 2는 false
+    number[2] = false;
+}
+
+int main() {
+    
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    //입력
+    int n;
+    int max = 0;
+    vector<int> input_num;
+    
+    while(true){ 
+        cin >> n;
+        if(n==0) break; //0이 입력되기 전까지 계산 실행
+        if(n>max) max=n; //에라토스테네스의 체를 여러 번 계산하지 않기 위해, 가장 큰 수를 찾는다.
+        input_num.push_back(n); //입력값 저장
+    }
+    
+    vector<bool> number(max+1, true); //소수인지의 여부를 저장하는 백터
+    findPrime(max, number); //에라토스테네스의 체를 이용해 max보다 작은 소수를 모두 구하기
+    
+    for(int i=0;i<input_num.size();i++){
+        findGoldbach(input_num[i], number);
+    }
+
+}
